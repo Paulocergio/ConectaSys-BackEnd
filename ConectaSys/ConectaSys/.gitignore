@@ -1,0 +1,39 @@
+# Diretórios e arquivos gerados pelo Visual Studio
+.vs/
+*.suo
+*.user
+*.sln.docstates
+*.vsidx
+
+
+
+# Diretórios de build e binários
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.dbmdl
+*.cachefile
+
+# Logs e temporários
+*.log
+*.tmp
+*.temp
+*.pidb
+
+# Arquivos específicos do Visual Studio
+*.v9.bin
+*.bin.v2
+
+# Configurações locais e temporárias
+FileContentIndex/
+v17/
+ProjectEvaluation/
+
+# Configurações do IIS Express (opcional)
+ConectaSys/config/applicationhost.config
+
+# Configurações geradas automaticamente
+appsettings.*.json
+node_modules/
