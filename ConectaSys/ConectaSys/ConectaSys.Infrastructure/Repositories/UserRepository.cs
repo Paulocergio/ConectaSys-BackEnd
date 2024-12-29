@@ -3,7 +3,6 @@ using ConectaSys.ConectaSys.Domain.Interfaces;
 using ConectaSys.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace ConectaSys.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
@@ -15,16 +14,16 @@ namespace ConectaSys.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-   
         public async Task AddAsync(User user)
         {
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<User> GetByIdAsync(Guid id)
+    
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return await _dbContext.Users.ToListAsync();
         }
     }
 }
