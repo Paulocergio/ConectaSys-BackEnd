@@ -22,18 +22,18 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Configuração de banco de dados
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Adicionando controladores e Swagger
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configuração do pipeline HTTP
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

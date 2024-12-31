@@ -11,11 +11,13 @@ namespace ConectaSys.ConectaSys.Application.UserCases
         public CreateUserCase(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-        }       
-        public  async Task Execute (CreateUserDTO userDTO)
+        }
+        public async Task Execute(CreateUserDTO userDTO)
         {
-            var  user = new User(userDTO.Name , userDTO.Email, userDTO.Password);   
-            await _userRepository.AddAsync(user);  
+      
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(userDTO.Password);          
+            var user = new User(userDTO.Name, userDTO.Email, passwordHash);
+            await _userRepository.AddAsync(user);
         }
     }
 }

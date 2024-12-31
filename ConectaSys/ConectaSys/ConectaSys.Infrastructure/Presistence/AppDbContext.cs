@@ -12,23 +12,21 @@ namespace ConectaSys.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            // Mapeia a entidade para a tabela "Users" no esquema "public"
             modelBuilder.Entity<User>().ToTable("users");
 
-            // Configura a propriedade ID
             modelBuilder.Entity<User>()
                 .Property(u => u.Id)
                 .HasColumnName("id")
                 .HasColumnType("uuid")
                 .IsRequired();
 
-            // Configura propriedades adicionais (opcional)
+
             modelBuilder.Entity<User>()
                 .Property(u => u.Name)
                 .HasColumnName("name")
                 .HasColumnType("varchar(255)")
                 .IsRequired();
+
 
             modelBuilder.Entity<User>()
                 .Property(u => u.Email)
@@ -36,27 +34,45 @@ namespace ConectaSys.Infrastructure.Persistence
                 .HasColumnType("varchar(255)")
                 .IsRequired();
 
+
             modelBuilder.Entity<User>()
-                .Property(u => u.Password)
-                .HasColumnName("password")
+                .Property(u => u.PasswordHash)
+                .HasColumnName("password_hash")
                 .HasColumnType("varchar(255)")
                 .IsRequired();
+
 
             modelBuilder.Entity<User>()
                 .Property(u => u.CreatedAt)
                 .HasColumnName("createdat")
-                .HasColumnType("timestamp")
+                .HasColumnType("timestamptz")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
 
             modelBuilder.Entity<User>()
                 .Property(u => u.UpdatedAt)
                 .HasColumnName("updatedat")
-                .HasColumnType("timestamp")
+                .HasColumnType("timestamptz")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Role)
+                .HasColumnName("role")
+                .HasColumnType("varchar(50)");
+
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Phone)
+                .HasColumnName("phone")
+                .HasColumnType("varchar(20)");
+
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.IsActive)
+                .HasColumnName("is_active")
+                .HasColumnType("boolean")
+                .HasDefaultValue(true);
         }
-
-
-
-
     }
 }

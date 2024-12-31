@@ -25,5 +25,18 @@ namespace ConectaSys.Infrastructure.Repositories
         {
             return await _dbContext.Users.ToListAsync();
         }
+        public async Task<User> ValidateUserAsync(string email, string password)
+        {
+            
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+                return null;
+           
+            var isValidPassword = BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
+            return isValidPassword ? user : null;
+        }
+
+
     }
 }

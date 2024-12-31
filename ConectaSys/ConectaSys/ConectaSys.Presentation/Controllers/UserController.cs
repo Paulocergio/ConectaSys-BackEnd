@@ -32,4 +32,6 @@ public class UserController : ControllerBase
         var users = await _getAllUsersCase.Execute();
         return Ok(users);
     }
+
+
 }
