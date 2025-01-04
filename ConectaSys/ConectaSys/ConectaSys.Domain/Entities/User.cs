@@ -24,15 +24,15 @@ public class User
     public DateTime UpdatedAt { get; set; }
 
     [Column("Role")]
-    public string Role { get; set; }
+    public string? Role { get; set; }
 
     [Column("Phone")]
-    public string Phone { get; set; }
+    public string? Phone { get; set; }
 
     [Column("IsActive")]
-    public bool IsActive { get; set; } = true; 
+    public bool? IsActive { get; set; } = true; 
 
-    public User(string name, string email, string passwordHash)
+    public User(string name, string email, string passwordHash, string role , string phone)
     {
         Id = Guid.NewGuid();
         Name = name;
@@ -41,5 +41,8 @@ public class User
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
         IsActive = true; 
+        Role = role;    
+        Phone =phone;  
+
     }
 }

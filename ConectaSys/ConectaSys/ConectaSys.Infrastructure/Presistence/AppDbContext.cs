@@ -7,10 +7,21 @@ namespace ConectaSys.Infrastructure.Persistence
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+
+        public DbSet<LogEntry> Logs { get; set; }
+
         public DbSet<User> Users { get; set; }
+
+
+     
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<LogEntry>()
+                .ToTable("logs");
+
+
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>().ToTable("users");
 

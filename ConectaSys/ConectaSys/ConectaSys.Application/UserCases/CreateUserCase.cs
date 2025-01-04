@@ -16,7 +16,7 @@ namespace ConectaSys.ConectaSys.Application.UserCases
         {
       
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(userDTO.Password);          
-            var user = new User(userDTO.Name, userDTO.Email, passwordHash);
+            var user = new User(userDTO.Name, userDTO.Email, passwordHash , userDTO.Role , userDTO.Phone) ;
             await _userRepository.AddAsync(user);
         }
     }

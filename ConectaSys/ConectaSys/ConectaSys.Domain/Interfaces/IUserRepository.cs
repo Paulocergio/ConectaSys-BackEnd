@@ -6,10 +6,8 @@ namespace ConectaSys.ConectaSys.Domain.Interfaces
     {
         Task AddAsync(User user);
         Task<IEnumerable<User>> GetAllAsync();
-
         Task<User> ValidateUserAsync(string email, string password);
-
-
     }
+
 
 }
