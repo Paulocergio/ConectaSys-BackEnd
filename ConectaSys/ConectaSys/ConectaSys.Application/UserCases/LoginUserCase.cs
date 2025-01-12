@@ -1,7 +1,7 @@
-﻿using ConectaSys.ConectaSys.Application.DTOs;
+﻿using ConectaSys.ConectaSys.Application.DTOs.Users;
 using ConectaSys.ConectaSys.Application.Services;
 using ConectaSys.ConectaSys.Domain.Entities;
-using ConectaSys.ConectaSys.Domain.Interfaces;
+using ConectaSys.ConectaSys.Domain.Interfaces.Users;
 using System;
 using System.Threading.Tasks;
 

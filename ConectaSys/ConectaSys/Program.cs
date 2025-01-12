@@ -1,20 +1,24 @@
 using ConectaSys.ConectaSys.Application.Services;
 using ConectaSys.ConectaSys.Application.UserCases;
-using ConectaSys.ConectaSys.Domain.Interfaces;
 using ConectaSys.Infrastructure.Persistence;
-using ConectaSys.Infrastructure.Repositories;
 using ConectaSys.Infrastructure.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ConectaSys.ConectaSys.Infrastructure.Logging.ConectaSys.Infrastructure.Logging;
+using ConectaSys.ConectaSys.Infrastructure.Repositories.Users;
+using ConectaSys.ConectaSys.Domain.Interfaces.Users;
+using ConectaSys.ConectaSys.Domain.Interfaces.ProductRepository;
+using ConectaSys.ConectaSys.Infrastructure.Repositories.ProductRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Registro de serviços
 builder.Services.AddScoped<GetAllUsersCase>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICreateProduct, ProductRepository>();
+builder.Services.AddScoped<CreateProductCase>();
 builder.Services.AddScoped<CreateUserCase>();
 builder.Services.AddScoped<LoginUserCase>();
 builder.Services.AddScoped<JwtTokenGenerator>();

@@ -1,4 +1,4 @@
-﻿using ConectaSys.ConectaSys.Application.DTOs;
+﻿using ConectaSys.ConectaSys.Application.DTOs.Users;
 using ConectaSys.ConectaSys.Application.UserCases;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

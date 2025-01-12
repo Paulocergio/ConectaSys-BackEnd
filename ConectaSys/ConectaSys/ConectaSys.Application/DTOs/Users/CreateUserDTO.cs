@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ConectaSys.ConectaSys.Application.DTOs
+namespace ConectaSys.ConectaSys.Application.DTOs.Users
 {
     public class CreateUserDTO
     {

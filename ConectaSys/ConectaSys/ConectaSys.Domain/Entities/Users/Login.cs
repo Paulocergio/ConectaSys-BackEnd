@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.Data;
 using System.Xml.Linq;
-namespace ConectaSys.ConectaSys.Domain.Entities
+namespace ConectaSys.ConectaSys.Domain.Entities.Users
 {
     [Table("Users")]
     public class Login

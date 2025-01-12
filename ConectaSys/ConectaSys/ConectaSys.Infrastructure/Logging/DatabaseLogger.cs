@@ -1,4 +1,5 @@
 ﻿using ConectaSys.ConectaSys.Domain.Entities;
+using ConectaSys.ConectaSys.Domain.Entities.Users;
 using ConectaSys.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
 
@@ -15,7 +16,7 @@ namespace ConectaSys.Infrastructure.Logging
 
         public IDisposable BeginScope<TState>(TState state) => null;
 
-        public bool IsEnabled(LogLevel logLevel) => true; // Ativa para todos os níveis de log
+        public bool IsEnabled(LogLevel logLevel) => true; 
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {

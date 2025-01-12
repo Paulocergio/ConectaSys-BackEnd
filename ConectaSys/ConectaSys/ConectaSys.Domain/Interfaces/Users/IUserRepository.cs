@@ -1,6 +1,6 @@
 ﻿using ConectaSys.ConectaSys.Domain.Entities;
 
-namespace ConectaSys.ConectaSys.Domain.Interfaces
+namespace ConectaSys.ConectaSys.Domain.Interfaces.Users
 {
     public interface IUserRepository
     {
