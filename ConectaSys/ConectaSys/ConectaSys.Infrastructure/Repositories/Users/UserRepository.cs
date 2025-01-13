@@ -1,9 +1,9 @@
 ﻿using ConectaSys.ConectaSys.Domain.Entities;
-using ConectaSys.ConectaSys.Domain.Interfaces;
+using ConectaSys.ConectaSys.Domain.Interfaces.Users;
 using ConectaSys.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace ConectaSys.Infrastructure.Repositories
+namespace ConectaSys.ConectaSys.Infrastructure.Repositories.Users
 {
     public class UserRepository : IUserRepository
     {
@@ -20,10 +20,22 @@ namespace ConectaSys.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-    
         public async Task<IEnumerable<User>> GetAllAsync()
         {
             return await _dbContext.Users.ToListAsync();
         }
+
+        public async Task<User> ValidateUserAsync(string email, string password)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+                return null;
+
+            var isValidPassword = BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
+
+            return isValidPassword ? user : null;
+        }
+
     }
 }

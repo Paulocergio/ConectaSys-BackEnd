@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,6 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ConectaSys.Application\Interfcaes\**" />
+    <Compile Remove="ConectaSys.Domain\ValueObjects\**" />
+    <Compile Remove="ConectaSys.Infrastructure\Services\**" />
+    <Content Remove="ConectaSys.Application\Interfcaes\**" />
+    <Content Remove="ConectaSys.Domain\ValueObjects\**" />
+    <Content Remove="ConectaSys.Infrastructure\Services\**" />
+    <EmbeddedResource Remove="ConectaSys.Application\Interfcaes\**" />
+    <EmbeddedResource Remove="ConectaSys.Domain\ValueObjects\**" />
+    <EmbeddedResource Remove="ConectaSys.Infrastructure\Services\**" />
+    <None Remove="ConectaSys.Application\Interfcaes\**" />
+    <None Remove="ConectaSys.Domain\ValueObjects\**" />
+    <None Remove="ConectaSys.Infrastructure\Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.2" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
@@ -14,9 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ConectaSys.Application\Interfcaes\" />
-    <Folder Include="ConectaSys.Domain\ValueObjects\" />
-    <Folder Include="ConectaSys.Infrastructure\Services\" />
     <Folder Include="ConectaSys.Presentation\Views\" />
   </ItemGroup>
 
