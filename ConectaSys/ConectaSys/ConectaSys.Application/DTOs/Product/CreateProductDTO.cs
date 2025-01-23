@@ -12,7 +12,5 @@
         public decimal Weight { get; set; }
         public string Dimensions { get; set; }
         public string ImageUrl { get; set; }
-
-
     }
 }

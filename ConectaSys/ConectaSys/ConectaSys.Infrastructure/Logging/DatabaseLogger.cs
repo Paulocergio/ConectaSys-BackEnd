@@ -16,7 +16,7 @@ namespace ConectaSys.Infrastructure.Logging
 
         public IDisposable BeginScope<TState>(TState state) => null;
 
-        public bool IsEnabled(LogLevel logLevel) => true; 
+        public bool IsEnabled(LogLevel logLevel) => true;
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
@@ -34,8 +34,16 @@ namespace ConectaSys.Infrastructure.Logging
                 timestamp = DateTime.UtcNow
             };
 
-            _dbContext.Logs.Add(logEntry);
-            _dbContext.SaveChanges();
+            try
+            {
+                _dbContext.Logs.Add(logEntry);
+                _dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+               
+                Console.WriteLine($"Erro ao salvar log no banco de dados: {ex.Message}");
+            }
         }
     }
 }
