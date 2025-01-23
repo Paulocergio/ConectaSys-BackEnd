@@ -54,7 +54,7 @@ namespace ConectaSys.Infrastructure.Persistence
                     .HasColumnType("timestamptz")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                entity.Property(e => e.UpdatedAt)
+                entity.Property(e => e.UpdateAt)
                     .HasColumnName("updatedat")
                     .HasColumnType("timestamptz")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");

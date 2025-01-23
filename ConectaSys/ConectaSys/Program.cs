@@ -14,7 +14,7 @@ using ConectaSys.ConectaSys.Infrastructure.Repositories.ProductRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Registro de serviços
+
 builder.Services.AddScoped<GetAllUsersCase>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICreateProduct, ProductRepository>();
@@ -23,7 +23,7 @@ builder.Services.AddScoped<CreateUserCase>();
 builder.Services.AddScoped<LoginUserCase>();
 builder.Services.AddScoped<JwtTokenGenerator>();
 
-// Configuração de CORS
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", policy =>
@@ -34,11 +34,13 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Configuração do DbContext
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Configuração do JWT
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+Console.WriteLine($"String de conexão: {connectionString}");
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+
 var jwtKey = builder.Configuration["Jwt:Key"];
 if (string.IsNullOrEmpty(jwtKey))
 {
@@ -61,25 +63,25 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Configuração de autorização
+
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configuração de logging
-builder.Logging.ClearProviders(); // Remove provedores padrão
+
+builder.Logging.ClearProviders(); 
 builder.Logging.AddProvider(new DatabaseLoggerProvider(
     new AppDbContext(new DbContextOptionsBuilder<AppDbContext>()
-        .UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+        .UseSqlServer(connectionString)
         .Options
     )
 ));
-builder.Logging.AddConsole(); // Adiciona logs no console (opcional)
+builder.Logging.AddConsole();
 
 var app = builder.Build();
 
-// Configuração de middlewares
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

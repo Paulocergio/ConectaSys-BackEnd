@@ -14,7 +14,7 @@ public class User
     [Column("Email")]
     public string Email { get; set; }
 
-    [Column("PasswordHash")]
+    [Column("password_hash")]
     public string PasswordHash { get; set; }
 
     [Column("CreatedAt")]
@@ -29,10 +29,10 @@ public class User
     [Column("Phone")]
     public string? Phone { get; set; }
 
-    [Column("IsActive")]
-    public bool? IsActive { get; set; } = true; 
+    [Column("is_active")]
+    public bool? IsActive { get; set; } = true;
 
-    public User(string name, string email, string passwordHash, string role , string phone)
+    public User(string name, string email, string passwordHash, string role, string phone)
     {
         Id = Guid.NewGuid();
         Name = name;
@@ -40,9 +40,8 @@ public class User
         PasswordHash = passwordHash;
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
-        IsActive = true; 
-        Role = role;    
-        Phone =phone;  
-
+        IsActive = true;
+        Role = role;
+        Phone = phone;
     }
 }
