@@ -13,13 +13,29 @@ namespace ConectaSys.ConectaSys.Infrastructure.Repositories.Users
         {
             _dbContext = dbContext;
         }
-
         public async Task AddAsync(User user)
         {
-            _dbContext.Users.Add(user);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                _dbContext.Users.Add(user);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao adicionar usuário ao banco de dados.", ex);
+            }
         }
 
+        public async Task<User> DeleteUser(Guid id)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null)
+                return null;
+
+            _dbContext.Users.Remove(user);
+            await _dbContext.SaveChangesAsync();
+            return user;
+        }
         public async Task<IEnumerable<User>> GetAllAsync()
         {
             return await _dbContext.Users.ToListAsync();

@@ -32,16 +32,5 @@ public class User
     [Column("is_active")]
     public bool? IsActive { get; set; } = true;
 
-    public User(string name, string email, string passwordHash, string role, string phone)
-    {
-        Id = Guid.NewGuid();
-        Name = name;
-        Email = email;
-        PasswordHash = passwordHash;
-        CreatedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
-        IsActive = true;
-        Role = role;
-        Phone = phone;
-    }
+    public User() { }
 }

@@ -16,5 +16,7 @@ namespace ConectaSys.ConectaSys.Application.UserCases
         {
             return await _userRepository.GetAllAsync();
         }
+
+      
     }
 }

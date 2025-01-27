@@ -17,11 +17,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<GetAllUsersCase>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<DeleteUserCase>();
 builder.Services.AddScoped<ICreateProduct, ProductRepository>();
 builder.Services.AddScoped<CreateProductCase>();
 builder.Services.AddScoped<CreateUserCase>();
 builder.Services.AddScoped<LoginUserCase>();
 builder.Services.AddScoped<JwtTokenGenerator>();
+
 
 
 builder.Services.AddCors(options =>

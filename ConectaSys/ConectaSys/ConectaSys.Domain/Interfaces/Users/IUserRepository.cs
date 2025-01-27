@@ -7,6 +7,7 @@ namespace ConectaSys.ConectaSys.Domain.Interfaces.Users
         Task AddAsync(User user);
         Task<IEnumerable<User>> GetAllAsync();
         Task<User> ValidateUserAsync(string email, string password);
+        Task<User> DeleteUser(Guid id);
     }
 
 
