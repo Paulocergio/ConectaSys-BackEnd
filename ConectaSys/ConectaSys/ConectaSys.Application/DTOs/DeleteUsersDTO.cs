@@ -1,4 +1,4 @@
-﻿namespace ConectaSys.ConectaSys.Application.DTOs.Users
+﻿namespace ConectaSys.ConectaSys.Application.DTOs
 {
     public class DeleteUsersDTO
     {

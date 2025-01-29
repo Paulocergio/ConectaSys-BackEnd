@@ -1,22 +1,26 @@
-﻿using ConectaSys.ConectaSys.Application.DTOs.Product;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using ConectaSys.ConectaSys.Application.DTOs.Products;
 using ConectaSys.ConectaSys.Domain.Entities;
 using ConectaSys.ConectaSys.Domain.Interfaces.ProductRepository;
 
-namespace ConectaSys.ConectaSys.Application.UserCases
+namespace ConectaSys.ConectaSys.Application.Products.Services 
 {
-    public class CreateProductCase
+    public class ProductService
     {
-        private readonly ICreateProduct _productRepository;
+        private readonly IProductRepository _productRepository;
 
-        public CreateProductCase(ICreateProduct productRepository)
+        public ProductService(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
 
-        public async Task Execute(CreateProductDTO productDTO)
+        public async Task<Product> CreateProductAsync(CreateProductDTO productDTO)
         {
             var product = new Product
             {
+                Id = productDTO.Id ?? Guid.NewGuid(), 
                 Name = productDTO.Name,
                 Description = productDTO.Description,
                 Price = productDTO.Price,
@@ -27,12 +31,21 @@ namespace ConectaSys.ConectaSys.Application.UserCases
                 Weight = productDTO.Weight,
                 Dimensions = productDTO.Dimensions,
                 ImageUrl = productDTO.ImageUrl,
+                  
+
+        Cost = productDTO.Cost,
+                ProfitMargin = productDTO.ProfitMargin,
+                Discount = productDTO.Discount,
+                UnitOfMeasure = productDTO.UnitOfMeasure,
+                Tags = productDTO.Tags,
                 CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-                Status = "active"
+                UpdatedAt = DateTime.UtcNow
             };
 
             await _productRepository.CreateProduct(product);
+            return product;
         }
+
+
     }
 }

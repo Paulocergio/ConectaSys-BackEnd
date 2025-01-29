@@ -8,102 +8,110 @@ namespace ConectaSys.Infrastructure.Persistence
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-
         public DbSet<LogEntry> Logs { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-      
             base.OnModelCreating(modelBuilder);
 
-    
+            // 🔹 Configuração para a tabela de logs
             modelBuilder.Entity<LogEntry>()
                 .ToTable("logs");
 
-
-
-
+            // 🔹 Configuração da tabela Product
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.ToTable("product");
+                entity.ToTable("Product"); // Nome correto da tabela
 
                 entity.HasKey(e => e.Id);
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("serial");
+             .HasColumnName("Id")
+             .HasColumnType("uniqueidentifier") // ✅ Certifique-se de que está correto
+             .ValueGeneratedOnAdd(); //
 
                 entity.Property(e => e.Name)
-                    .HasColumnName("name")
+                    .HasColumnName("Name")
                     .HasColumnType("varchar(255)")
                     .IsRequired();
 
                 entity.Property(e => e.Description)
-                    .HasColumnName("description")
+                    .HasColumnName("Description")
                     .HasColumnType("text");
 
+                entity.Property(e => e.SupplierId)
+                  .HasColumnName("SupplierId")
+                  .HasColumnType("uniqueidentifier");
+
                 entity.Property(e => e.Price)
-                    .HasColumnName("price")
-                    .HasColumnType("numeric(10, 2)")
+                    .HasColumnName("Price")
+                    .HasColumnType("decimal(10,2)")
                     .IsRequired();
 
                 entity.Property(e => e.StockQuantity)
-                    .HasColumnName("stock_quantity")
+                    .HasColumnName("StockQuantity")
                     .HasColumnType("int")
                     .IsRequired();
 
                 entity.Property(e => e.ProductCode)
-                    .HasColumnName("product_code")
+                    .HasColumnName("ProductCode")
                     .HasColumnType("varchar(50)");
 
                 entity.Property(e => e.Category)
-                    .HasColumnName("category")
+                    .HasColumnName("Category")
                     .HasColumnType("varchar(100)");
 
                 entity.Property(e => e.Brand)
-                    .HasColumnName("brand")
+                    .HasColumnName("Brand")
                     .HasColumnType("varchar(100)");
 
                 entity.Property(e => e.Weight)
-                    .HasColumnName("weight")
-                    .HasColumnType("numeric(10, 2)");
+                    .HasColumnName("Weight")
+                    .HasColumnType("decimal(10,2)");
 
                 entity.Property(e => e.Dimensions)
-                    .HasColumnName("dimensions")
+                    .HasColumnName("Dimensions")
                     .HasColumnType("varchar(100)");
 
                 entity.Property(e => e.ImageUrl)
-                    .HasColumnName("image_url")
+                    .HasColumnName("ImageUrl")
                     .HasColumnType("text");
 
                 entity.Property(e => e.CreatedAt)
-                    .HasColumnName("created_at")
-                    .HasColumnType("timestamptz")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                    .HasColumnName("CreatedAt")
+                    .HasColumnType("datetime2");
 
                 entity.Property(e => e.UpdatedAt)
-                    .HasColumnName("updated_at")
-                    .HasColumnType("timestamptz")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                    .HasColumnName("UpdatedAt")
+                    .HasColumnType("datetime2") 
+                    .HasDefaultValueSql("GETDATE()");
 
                 entity.Property(e => e.Status)
-                    .HasColumnName("status")
+                    .HasColumnName("Status")
                     .HasColumnType("varchar(50)")
                     .HasDefaultValue("active");
 
                 entity.Property(e => e.Cost)
-                    .HasColumnName("cost")
-                    .HasColumnType("numeric(10, 2)");
+                    .HasColumnName("Cost")
+                    .HasColumnType("decimal(10,2)");
 
                 entity.Property(e => e.ProfitMargin)
-                    .HasColumnName("profit_margin")
-                    .HasColumnType("numeric(5, 2)");
+                    .HasColumnName("ProfitMargin")
+                    .HasColumnType("decimal(5,2)");
 
                 entity.Property(e => e.Discount)
-                    .HasColumnName("discount")
-                    .HasColumnType("numeric(5, 2)");
+                    .HasColumnName("Discount")
+                    .HasColumnType("decimal(5,2)");
+
+                entity.Property(e => e.UnitOfMeasure)
+                    .HasColumnName("UnitOfMeasure")
+                    .HasColumnType("varchar(50)");
+
+                entity.Property(e => e.Tags)
+                    .HasColumnName("Tags")
+                    .HasColumnType("varchar(MAX)"); 
             });
         }
     }
