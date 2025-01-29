@@ -21,7 +21,7 @@ namespace ConectaSys.ConectaSys.Infrastructure.Logging
 
             public void Dispose()
             {
-                // Não é necessário implementar o Dispose no momento
+          
             }
         }
     }

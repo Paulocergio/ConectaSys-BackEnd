@@ -3,7 +3,7 @@
 
 namespace ConectaSys.ConectaSys.Domain.Interfaces.ProductRepository
 {
-    public interface ICreateProduct
+    public interface IProductRepository
     {
         Task CreateProduct(Product product);
 
