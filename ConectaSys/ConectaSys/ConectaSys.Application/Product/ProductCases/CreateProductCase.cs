@@ -7,9 +7,9 @@ namespace ConectaSys.ConectaSys.Application.Products.UseCases
 {
     public class CreateProductUseCase
     {
-        private readonly ProductService _productService; // ✅ Correção
+        private readonly ProductService _productService; 
 
-        public CreateProductUseCase(ProductService productService) // ✅ Agora recebe `ProductService`
+        public CreateProductUseCase(ProductService productService) 
         {
             _productService = productService;
         }
