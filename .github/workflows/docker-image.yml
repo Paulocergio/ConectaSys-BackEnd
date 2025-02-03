@@ -1,0 +1,51 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Clona o repositório
+    - name: Checkout do código
+      uses: actions/checkout@v4
+
+    # Faz login no Docker Hub (ou GHCR)
+    - name: Login no Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    # Define um nome de versão para a imagem (timestamp)
+    - name: Definir nome da imagem
+      run: echo "IMAGE_TAG=$(date +%s)" >> $GITHUB_ENV
+
+    # Build da imagem Docker
+    - name: Construir a imagem Docker
+      run: docker build . --file Dockerfile --tag my-image-name:${{ env.IMAGE_TAG }}
+
+    # (Opcional) Teste a imagem antes de publicar
+    - name: Testar a imagem Docker (Opcional)
+      run: docker run --rm my-image-name:${{ env.IMAGE_TAG }} --help
+
+    # Faz push da imagem para o Docker Hub (ou GHCR)
+    - name: Publicar no Docker Hub
+      run: docker tag my-image-name:${{ env.IMAGE_TAG }} ${{ secrets.DOCKER_USERNAME }}/connectasys:${{ env.IMAGE_TAG }} &&
+           docker push ${{ secrets.DOCKER_USERNAME }}/connectasys:${{ env.IMAGE_TAG }}
+
+    # (Opcional) Atualiza o contêiner no servidor remoto
+    - name: Deploy via SSH (Opcional)
+      if: success()
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        script: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/connectasys:${{ env.IMAGE_TAG }}
+          docker stop connectasys || true
+          docker rm connectasys || true
+          docker run -d --name connectasys -p 5000:5000 ${{ secrets.DOCKER_USERNAME }}/connectasys:${{ env.IMAGE_TAG }}
