@@ -1,4 +1,4 @@
-# Use a imagem base do .NET SDK
+# Etapa 1: Build
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 # Configure o diretório de trabalho
@@ -9,27 +9,30 @@ COPY ["ConectaSys.sln", "./"]
 
 # Copie os arquivos de projeto relacionados
 COPY ["ConectaSys.Application/ConectaSys.Application.csproj", "ConectaSys.Application/"]
-COPY ["ConectaSys.Domain/ConectaSys.Domain.csproj", "ConectaSys.Domain/"]
+COPY ["ConectaSys.Core/ConectaSys.Core.csproj", "ConectaSys.Core/"]
 COPY ["ConectaSys.Infrastructure/ConectaSys.Infrastructure.csproj", "ConectaSys.Infrastructure/"]
 COPY ["ConectaSys.Presentation/ConectaSys.Presentation.csproj", "ConectaSys.Presentation/"]
 
-# Restaure as dependências do projeto
-RUN dotnet restore
+# Restaurar as dependências (sem cache para garantir atualização)
+RUN dotnet restore --no-cache
 
-# Copie o restante dos arquivos para o contêiner
+# Copiar todos os arquivos para o contêiner
 COPY . .
 
-# Compile e publique o projeto
+# Build e publicação do projeto
 RUN dotnet publish "ConectaSys.Presentation/ConectaSys.Presentation.csproj" -c Release -o /app/out
 
-# Use uma imagem base mais leve para a execução
+# Etapa 2: Runtime
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 
-# Configure o diretório de trabalho para execução
+# Configure o diretório de trabalho
 WORKDIR /app
 
 # Copie os arquivos publicados para a imagem de execução
-COPY --from=build /app/out ./
+COPY --from=build /app/out .
 
-# Defina o comando de inicialização
-ENTRYPOINT ["dotnet", "ConectaSys.Presentation.dll"]
+# Definir variável de ambiente para indicar o ambiente de produção
+ENV DOTNET_RUNNING_IN_CONTAINER=true
+
+# Configurar um loop para restart automático caso o serviço caia
+CMD while :; do dotnet ConectaSys.Presentation.dll; sleep 5; done
